@@ -1,0 +1,18 @@
+{
+  "name": "amplitude-robot",
+  "version": "1.0.0",
+  "description": "amplitude micro service",
+  "author": "EVERYDAYHERO2000 <ilyaflare@gmail.com>",
+  "homepage": "https://github.com/EVERYDAYHERO2000/amplitude-robot",
+  "repository": "https://github.com/EVERYDAYHERO2000/amplitude-robot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "superagent": "^4.0.0-beta.5",
+		"body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  }
+}
