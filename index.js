@@ -7,7 +7,7 @@ const secret = require('./secret.js'); //the file is not included in the reposit
 const token = secret.token; //'8bdb15d817f0e511c1c.........7f0';
 const secretKey = secret.secretKey; //'c6f0158bd0a97f5..........015';
 
-const port = process.env.PORT || 5000;
+const port = 8080;
 
 app.get('/', function (req, res) {
 	let url_parts = url.parse(req.url, true);
@@ -58,10 +58,14 @@ app.get('/', function (req, res) {
 		}));
 
 	}
+	
+	
+	
 });
 
 app.listen(port, () => console.log(`Listening on ${ port }`));
 
+console.log(app)
 
 function amplitude(from, to, start, end, callback) {
 
