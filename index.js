@@ -2,7 +2,7 @@ const request = require('superagent');
 const querystring = require('querystring');
 const app = require('express')();
 const url = require('url');
-const http = require('http').Server(app);
+const http = require('https').Server(app);
 const bodyParser = require('body-parser');
 
 const secret = require('./secret.js'); //the file is not included in the repository
