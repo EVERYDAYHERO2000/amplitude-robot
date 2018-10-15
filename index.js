@@ -1,3 +1,12 @@
+const express = require('express')
+const path = require('path')
+const PORT = process.env.PORT || 5000
+
+express()
+  .get('/', (req, res) => res.send('!done'))
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+
+/*
 const request = require('superagent');
 const app = require('express')();
 const url = require('url');
@@ -111,3 +120,5 @@ function amplitude(from, to, start, end, callback) {
 		});
 
 }
+
+*/
