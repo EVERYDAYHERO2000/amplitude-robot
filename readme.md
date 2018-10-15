@@ -1,4 +1,6 @@
-# Amplitude Dashboard Rest API
+# Amplitude Dashboard Rest API 
+
+Two step funnel data
 
 [Documentation](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data)
 
@@ -6,8 +8,6 @@
 ## Running Locally
 
 ```sh
-$ git clone https://github.com/heroku/node-js-getting-started.git # or clone your own fork
-$ cd node-js-getting-started
 $ npm install
 $ npm start
 ```

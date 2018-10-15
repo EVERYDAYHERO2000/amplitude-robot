@@ -1,7 +1,7 @@
 {
-  "name": "node-js-getting-started",
-  "version": "0.3.0",
-  "description": "A sample Node.js app using Express 4",
+  "name": "amplitude-robot",
+  "version": "0.1.0",
+  "description": "Two step funnel data",
   "engines": {
     "node": "8.9.1"
   },
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/heroku/node-js-getting-started"
+    "url": "https://github.com/EVERYDAYHERO2000/amplitude-robot"
   },
   "keywords": [
     "node",
