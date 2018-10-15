@@ -1,48 +1,101 @@
 
-const request = require('superagent');
+const request 		= require('superagent');
 const querystring = require('querystring');
-const app = require('express')();
-const url = require('url');
-const http = require('http').Server(app);
-const bodyParser = require('body-parser');
+const app 				= require('express')();
+const url 				= require('url');
+const http 				= require('http').Server(app);
+const bodyParser 	= require('body-parser');
 
-const secret = require('./secret.js'); //the file is not included in the repository
+const secret 			= require('./secret.js'); //the file is not included in the repository
 
-const token = secret.token; //'8bdb15d817f0e511c1c.........7f0';
-const secretKey = secret.secretKey; //'c6f0158bd0a97f5..........015';
+const token 			= secret.token; //'8bdb15d817f0e511c1c.........7f0';
+const secretKey 	= secret.secretKey; //'c6f0158bd0a97f5..........015';
 
 
 
+app.get('/', function(req, res) {
+	let url_parts = url.parse(req.url, true);
+	
+	let __from = url_parts.query.from;
+	let __to = url_parts.query.to;
+	let __start = url_parts.query.start;
+	let __end = url_parts.query.end; 
+	
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+	
+	if (__from && __to && __start && __end ) {
+		
+		amplitude(__from,__to,__start,__end, function(d){
+			
+			let data = JSON.parse(d.text).data;
+			
+			let result = {
+				status : 'Success',
+				data : {
+					from : {
+						payload : __from,
+						value : data[0].convertedCounts[0]
+					},
+					to : {
+						payload : __to,
+						value : data[0].convertedCounts[1]
+					},
+					start_date : __start,
+					end_date : __end,
+					difference : data[0].convertedCounts[0] - data[0].convertedCounts[1],
+					delta : 100 / ( data[0].convertedCounts[0] / data[0].convertedCounts[1] ),
+					conversion : data[0].convertedCounts[1] / data[0].convertedCounts[0] * 100,
+					event_name : 'chat_message_received' 
+				}
+				
+			};
+
+			res.send(JSON.stringify(result));
+			
+		});
+		
+	} else {
+		
+		res.send(JSON.stringify({status : 'Bad request'}));
+		
+	}
+});
+
+app.listen(3000);
+
+
+function amplitude(from,to,start,end,callback) { 
 
 var payload_from = {
-	"event_type" : "chat_message_received",
+	"event_type": "chat_message_received",
 	"filters": [
 		{
 			"subprop_type": "event",
-    	"subprop_key": "payload_name",
-      "subprop_op": "is",
-      "subprop_value": ["guest_start"]	// <= from
+			"subprop_key": "payload_name",
+			"subprop_op": "is",
+			"subprop_value": [from] // <= from
 		}
 	]
 };
 
 
 var payload_to = {
-	"event_type" : "chat_message_received",
+	"event_type": "chat_message_received",
 	"filters": [
 		{
 			"subprop_type": "event",
-    	"subprop_key": "payload_name",
-      "subprop_op": "is",
-      "subprop_value": ["wv_01_inc_foreigner_start"]  // <= to	
+			"subprop_key": "payload_name",
+			"subprop_op": "is",
+			"subprop_value": [to] // <= to	
 		}
 	]
 };
 
 var data = {
-	e: [ JSON.stringify(payload_from) , JSON.stringify(payload_to) ],
-  start: '20181012',
-  end: '20181013'
+	e: [JSON.stringify(payload_from), JSON.stringify(payload_to)],
+	start: start,
+	end: end
 }
 
 request.get('https://amplitude.com/api/2/funnels')
@@ -50,6 +103,10 @@ request.get('https://amplitude.com/api/2/funnels')
     .query(data)
     .set('Accept', 'application/json')
 		.end((err, res) => {
-      console.log(res)
+			
+			if (res && callback) callback(res);
+	
 		});
+	
+}
 
