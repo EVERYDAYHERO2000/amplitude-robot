@@ -2,7 +2,8 @@ const request = require('superagent');
 const querystring = require('querystring');
 const app = require('express')();
 const url = require('url');
-const http = require('https').Server(app);
+const http = require('http').Server(app);
+const enforce = require('express-sslify');
 const bodyParser = require('body-parser');
 
 const secret = require('./secret.js'); //the file is not included in the repository
@@ -11,6 +12,7 @@ const token = secret.token; //'8bdb15d817f0e511c1c.........7f0';
 const secretKey = secret.secretKey; //'c6f0158bd0a97f5..........015';
 
 
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 app.get('/', function (req, res) {
 	let url_parts = url.parse(req.url, true);
