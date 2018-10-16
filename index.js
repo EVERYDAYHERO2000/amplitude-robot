@@ -1,12 +1,12 @@
-const request = require('superagent')
-const express = require('express')
-const path = require('path')
-const url = require('url')
-const secret = require('./secret.js') //the file is not included in the repository
+const request = require('superagent');
+const express = require('express');
+const path = require('path');
+const url = require('url');
+const secret = require('./secret.js'); //the file is not included in the repository
 
-const PORT = process.env.PORT || 5000
-const token = secret.token //'8bdb15d817f0e511c1c.........7f0';
-const secretKey = secret.secretKey //'c6f0158bd0a97f5..........015';
+const PORT = process.env.PORT || 5000;
+const token = secret.token; //'8bdb15d817f0e511c1c.........7f0';
+const secretKey = secret.secretKey; //'c6f0158bd0a97f5..........015';
 
 express()
 .get('/', (req, res) => {
@@ -18,8 +18,8 @@ express()
 	let __start = url_parts.query.start;
 	let __end = url_parts.query.end;
 
-	//res.header("Access-Control-Allow-Origin", "*");
-	//res.header("Access-Control-Allow-Headers", "X-Requested-With");
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
 	if (__from && __to && __start && __end) {
 
@@ -41,7 +41,6 @@ express()
 					start_date: __start,
 					end_date: __end,
 					difference: data[0].convertedCounts[0] - data[0].convertedCounts[1],
-					delta: 100 / (data[0].convertedCounts[0] / data[0].convertedCounts[1]),
 					conversion: data[0].convertedCounts[1] / data[0].convertedCounts[0] * 100,
 					event_name: 'chat_message_received'
 				}
