@@ -9,6 +9,11 @@ const token = secret.token; //'8bdb15d817f0e511c1c.........7f0';
 const secretKey = secret.secretKey; //'c6f0158bd0a97f5..........015';
 
 express()
+.all('/', function (req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+	next();
+})
 .get('/', (req, res) => {
 	
 	let url_parts = url.parse(req.url, true);
