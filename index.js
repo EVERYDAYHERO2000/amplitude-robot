@@ -18,8 +18,8 @@ express()
 	let __start = url_parts.query.start;
 	let __end = url_parts.query.end;
 
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+	//res.header("Access-Control-Allow-Origin", "*");
+	//res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
 	if (__from && __to && __start && __end) {
 
