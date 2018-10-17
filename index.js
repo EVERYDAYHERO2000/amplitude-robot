@@ -1,5 +1,6 @@
 const request = require('superagent');
 const express = require('express');
+const querystring = require('querystring');
 const path = require('path');
 const url = require('url');
 const secret = require('./secret.js'); //the file is not included in the repository
@@ -68,8 +69,23 @@ express()
 		res.send(JSON.stringify({
 			status: 'Bad request'
 		}));
-
 	}
+})
+.post('/', function (request, response) {
+	
+	request.on('data', function (chunk) {
+	
+	let queryData = querystring.parse(chunk);
+
+	if (request.method === 'POST') {	
+		
+		response.header("Access-Control-Allow-Origin", "*");
+		response.header("Access-Control-Allow-Headers", "X-Requested-With");
+		response.json(queryData);
+		console.log(queryData);
+	} 
+
+
 })
 .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
