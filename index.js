@@ -36,7 +36,7 @@ express()
 	if (__from && __to && __start && __end) {
 
 		amplitude(__from, __to, __start, __end, function (d) {
-
+			console.log(d)	
 			let data = JSON.parse(d.text).data;
 
 			let result = {
