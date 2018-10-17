@@ -10,8 +10,10 @@ const secretKey = secret.secretKey; //'c6f0158bd0a97f5..........015';
 
 express()
 .all('/', function (req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+	res.header('content-type', 'application/json');
+	res.header('X-Content-Type-Options', 'nosniff');
 	next();
 })
 .get('/', (req, res) => {
