@@ -36,29 +36,32 @@ express()
 	if (__from && __to && __start && __end) {
 
 		amplitude(__from, __to, __start, __end, function (d) {
-			console.log(d)	
+			
 			let data = JSON.parse(d.text).data;
+			let result = {status: 'null'};
+			
+			if (data.length){
+				result = {
+					status: 'Success',
+					data: {
+						from: {
+							payload: __from,
+							value: data[0].convertedCounts[0]
+						},
+						to: {
+							payload: __to,
+							value: data[0].convertedCounts[1]
+						},
+						start_date: __start,
+						end_date: __end,
+						difference: data[0].convertedCounts[0] - data[0].convertedCounts[1],
+						conversion: data[0].convertedCounts[1] / data[0].convertedCounts[0] * 100,
+						event_name: 'chat_message_received'
+					}
 
-			let result = {
-				status: 'Success',
-				data: {
-					from: {
-						payload: __from,
-						value: data[0].convertedCounts[0]
-					},
-					to: {
-						payload: __to,
-						value: data[0].convertedCounts[1]
-					},
-					start_date: __start,
-					end_date: __end,
-					difference: data[0].convertedCounts[0] - data[0].convertedCounts[1],
-					conversion: data[0].convertedCounts[1] / data[0].convertedCounts[0] * 100,
-					event_name: 'chat_message_received'
-				}
-
-			};
-
+				};
+			}
+			
 			res.send(JSON.stringify(result));
 
 		});
