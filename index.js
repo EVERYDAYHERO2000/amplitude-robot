@@ -27,6 +27,8 @@ express()
 
 	//res.header("Access-Control-Allow-Origin", "*");
 	//res.header("Access-Control-Allow-Headers", "X-Requested-With");
+	res.header('content-type', 'application/json');
+	res.header('X-Content-Type-Options', 'nosniff');
 
 	if (__from && __to && __start && __end) {
 
